@@ -1,0 +1,1112 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Brula</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #d2b48c 0%, #cd853f 100%);
+            color: #333;
+            padding: 15px;
+            min-height: 100vh;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+        body.lola-theme {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        }
+        header {
+            text-align: center;
+            padding: 25px 0;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.6s ease;
+        }
+        h1 {
+            font-size: 2.4rem;
+            color: #8B4513;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            animation: bounce 1s infinite alternate;
+        }
+        body.lola-theme h1 {
+            color: #333;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #654321;
+        }
+        body.lola-theme .subtitle {
+            color: #666;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.5s ease;
+            transition: all 0.3s ease;
+        }
+        body.lola-theme .card {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        .dog-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            animation: fadeIn 0.7s ease;
+        }
+        .dog-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        .dog-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .dog-btn:hover::before {
+            left: 100%;
+        }
+        #bruno-btn {
+            background: #D2B48C;
+            margin-right: 10px;
+        }
+        #lola-btn {
+            background: #FFFFFF;
+            margin-left: 10px;
+            color: #333;
+        }
+        .dog-btn.active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+            animation: fadeIn 0.8s ease;
+        }
+        .action-btn {
+            background: #f093fb;
+            border: none;
+            border-radius: 14px;
+            padding: 30px 5px;
+            font-size: 2.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            color: white;
+            animation: bounceButton 2s infinite alternate;
+        }
+        .action-btn.walk-btn {
+            background: #43cea2;
+        }
+        .action-btn.pee-btn {
+            background: #ff9a9e;
+            color: #333;
+        }
+        .action-btn.poop-btn {
+            background: #a8edea;
+            color: #333;
+        }
+        .action-btn:active, .action-btn.selected {
+            transform: scale(0.9);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+            animation: pop 0.3s ease;
+        }
+        .action-btn.selected {
+            box-shadow: 0 0 0 4px #4CAF50, 0 6px 18px rgba(0,0,0,0.2);
+        }
+        .walk-details {
+            display: none;
+            animation: fadeIn 0.3s ease;
+            margin-top: 20px;
+        }
+        .walk-details.active {
+            display: block !important;
+        }
+        .walker-required {
+            border: 2px solid #f44336 !important;
+        }
+        select {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+            background: white;
+            animation: fadeIn 0.4s ease;
+        }
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            animation: pulseButton 2s infinite alternate;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        .btn-primary:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            animation: none;
+        }
+        .history-item {
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            animation: slideInRight 0.4s ease;
+            border-left: 4px solid #4CAF50;
+            transition: all 0.3s ease;
+        }
+        .history-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+        .history-date {
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInLeft 0.5s ease;
+        }
+        body.lola-theme .history-date {
+            color: #2e7d32;
+        }
+        .history-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease;
+        }
+        .history-action {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s ease;
+        }
+        .walker-info {
+            font-style: italic;
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            animation: fadeIn 0.4s ease;
+        }
+        .history-nav {
+            text-align: center;
+            margin: 25px 0;
+            animation: fadeIn 0.9s ease;
+        }
+        .history-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            animation: pulseButton 2s infinite alternate;
+        }
+        .history-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        .hidden {
+            display: none;
+        }
+        .walker-list {
+            margin-top: 18px;
+            animation: fadeIn 0.5s ease;
+        }
+        .walker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff5f5 0%, #f8f9fa 100%);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ff6b6b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: slideInLeft 0.4s ease;
+            transition: all 0.3s ease;
+        }
+        .walker-item:hover {
+            transform: translateX(5px);
+        }
+        .walker-name {
+            flex-grow: 1;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        .walker-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .edit-btn, .delete-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            animation: pulseIcon 2s infinite;
+        }
+        .edit-btn {
+            color: #4facfe;
+        }
+        .delete-btn {
+            color: #ff6b6b;
+        }
+        .edit-btn:hover, .delete-btn:hover {
+            background: rgba(0,0,0,0.1);
+            transform: scale(1.1);
+        }
+        .walker-input {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            animation: fadeIn 0.6s ease;
+        }
+        .walker-input input {
+            flex-grow: 1;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        .walker-input input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        .walker-input button {
+            width: auto;
+            padding: 16px 24px;
+        }
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 18px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+            animation: pulseButton 2s infinite alternate;
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+        .edit-delete-controls {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        .history-item:hover .edit-delete-controls {
+            display: flex;
+        }
+        .edit-history-btn, .delete-history-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            animation: pulseIcon 2s infinite;
+        }
+        .edit-history-btn {
+            color: #4facfe;
+            background: rgba(79, 172, 254, 0.1);
+        }
+        .delete-history-btn {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        .edit-history-btn:hover, .delete-history-btn:hover {
+            transform: scale(1.1);
+        }
+        .record-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .action-count {
+            background: #4CAF50;
+            color: white;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+        .no-records {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-style: italic;
+            animation: fadeIn 0.5s ease;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        .notification.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes pulseButton {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes bounceButton {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐾 Registro Brula</h1>
+        <div class="subtitle">Tu asistente para Bruno y Lola</div>
+    </header>
+
+    <div id="notification" class="notification"></div>
+
+    <main id="main-view">
+        <div class="card">
+            <div class="dog-selector">
+                <button id="bruno-btn" class="dog-btn active">Bruno 🐶</button>
+                <button id="lola-btn" class="dog-btn">Lola 🐩</button>
+            </div>
+
+            <div class="actions">
+                <button class="action-btn walk-btn">🚶‍♂️</button>
+                <button class="action-btn pee-btn">💧</button>
+                <button class="action-btn poop-btn">💩</button>
+            </div>
+
+            <div class="walk-details">
+                <select id="walker-select" required>
+                    <option value="">Selecciona paseador...</option>
+                </select>
+                <button type="button" class="btn-primary" id="save-record-btn" disabled>Guardar registro</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: #8B4513; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">📅 Hoy</h3>
+            <div id="today-history"></div>
+        </div>
+
+        <div class="history-nav">
+            <button class="history-btn" id="show-history">📋 Ver historial completo</button>
+        </div>
+
+        <div class="card">
+            <button class="btn-primary" id="manage-walkers-btn">👥 Gestionar Paseadores</button>
+        </div>
+
+        <div id="full-history" class="hidden card">
+            <h3 style="color: #8B4513; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">📋 Historial completo</h3>
+            <div id="history-list"></div>
+        </div>
+    </main>
+
+    <main id="walkers-view" class="hidden">
+        <div class="card">
+            <button class="back-btn" id="back-to-main">← Volver</button>
+            <h3 style="color: #8B4513; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">👥 Gestión de Paseadores</h3>
+            <div class="walker-input">
+                <input type="text" id="new-walker-input" placeholder="Nombre del paseador..." />
+                <button class="btn-primary" id="add-walker-btn">Agregar</button>
+            </div>
+            <div id="walker-list" class="walker-list"></div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Variables globales
+            let currentDog = 'Bruno';
+            let registros = JSON.parse(localStorage.getItem('registros')) || {};
+            let paseadores = JSON.parse(localStorage.getItem('paseadores')) || [];
+            let selectedActions = [];
+            let editingRecord = null;
+            
+            // Elementos DOM
+            const notificationEl = document.getElementById('notification');
+            const mainView = document.getElementById('main-view');
+            const walkersView = document.getElementById('walkers-view');
+            const brunoBtn = document.getElementById('bruno-btn');
+            const lolaBtn = document.getElementById('lola-btn');
+            const walkBtn = document.querySelector('.walk-btn');
+            const peeBtn = document.querySelector('.pee-btn');
+            const poopBtn = document.querySelector('.poop-btn');
+            const walkDetails = document.querySelector('.walk-details');
+            const todayHistoryEl = document.getElementById('today-history');
+            const fullHistoryEl = document.getElementById('history-list');
+            const showHistoryBtn = document.getElementById('show-history');
+            const walkerSelect = document.getElementById('walker-select');
+            const saveRecordBtn = document.getElementById('save-record-btn');
+            const newWalkerInput = document.getElementById('new-walker-input');
+            const addWalkerBtn = document.getElementById('add-walker-btn');
+            const walkerList = document.getElementById('walker-list');
+            const manageWalkersBtn = document.getElementById('manage-walkers-btn');
+            const backToMainBtn = document.getElementById('back-to-main');
+            const body = document.body;
+
+            // Función para mostrar notificaciones
+            function showNotification(message, isError = false) {
+                notificationEl.textContent = message;
+                notificationEl.className = 'notification';
+                if (isError) {
+                    notificationEl.classList.add('error');
+                }
+                notificationEl.style.animation = 'slideInRight 0.3s ease, fadeOut 0.5s ease 2.5s forwards';
+                
+                setTimeout(() => {
+                    notificationEl.style.animation = 'none';
+                }, 3000);
+            }
+
+            // Cambiar perro y tema
+            brunoBtn.addEventListener('click', () => {
+                currentDog = 'Bruno';
+                body.classList.remove('lola-theme');
+                updateActiveDog();
+                renderTodayHistory();
+            });
+            
+            lolaBtn.addEventListener('click', () => {
+                currentDog = 'Lola';
+                body.classList.add('lola-theme');
+                updateActiveDog();
+                renderTodayHistory();
+            });
+
+            function updateActiveDog() {
+                brunoBtn.classList.toggle('active', currentDog === 'Bruno');
+                lolaBtn.classList.toggle('active', currentDog === 'Lola');
+            }
+
+            // Manejo de selección de acciones
+            function toggleAction(action, buttonElement) {
+                const index = selectedActions.indexOf(action);
+                if (index > -1) {
+                    selectedActions.splice(index, 1);
+                    buttonElement.classList.remove('selected');
+                } else {
+                    selectedActions.push(action);
+                    buttonElement.classList.add('selected');
+                }
+                
+                // Mostrar u ocultar detalles si hay selección
+                if (selectedActions.length > 0) {
+                    walkDetails.classList.add('active');
+                } else {
+                    walkDetails.classList.remove('active');
+                }
+                
+                // Validar que haya selección y paseador antes de habilitar guardar
+                validateSaveButton();
+            }
+
+            function validateSaveButton() {
+                const hasSelection = selectedActions.length > 0;
+                const hasWalker = walkerSelect.value !== '';
+                
+                if (hasSelection && hasWalker) {
+                    saveRecordBtn.disabled = false;
+                    walkerSelect.classList.remove('walker-required');
+                } else {
+                    saveRecordBtn.disabled = true;
+                    if (hasSelection && !hasWalker) {
+                        walkerSelect.classList.add('walker-required');
+                    } else {
+                        walkerSelect.classList.remove('walker-required');
+                    }
+                }
+            }
+
+            // Asignar eventos a los botones de acción
+            walkBtn.addEventListener('click', () => toggleAction('paseo', walkBtn));
+            peeBtn.addEventListener('click', () => toggleAction('pichi', peeBtn)); // pichi es pis
+            poopBtn.addEventListener('click', () => toggleAction('popis', poopBtn)); // popis es caca
+
+            // Cambio de paseador
+            walkerSelect.addEventListener('change', validateSaveButton);
+
+            // Guardar registro
+            saveRecordBtn.addEventListener('click', () => {
+                if (selectedActions.length === 0) {
+                    showNotification('⚠️ Selecciona al menos una acción', true);
+                    return;
+                }
+
+                if (walkerSelect.value === '') {
+                    showNotification('⚠️ Debes seleccionar un paseador', true);
+                    walkerSelect.classList.add('walker-required');
+                    return;
+                }
+
+                const fecha = new Date().toISOString().split('T')[0];
+                const walker = walkerSelect.value;
+
+                if (!registros[fecha]) registros[fecha] = {};
+                if (!registros[fecha][currentDog]) registros[fecha][currentDog] = [];
+
+                selectedActions.forEach(action => {
+                    registros[fecha][currentDog].push({
+                        tipo: action,
+                        hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+                        paseador: (action === 'paseo') ? walker : ''
+                    });
+                });
+
+                saveAndRefresh();
+                showNotification('✅ Registro guardado correctamente!');
+                
+                // Limpiar selección
+                selectedActions = [];
+                walkBtn.classList.remove('selected');
+                peeBtn.classList.remove('selected');
+                poopBtn.classList.remove('selected');
+                walkDetails.classList.remove('active');
+                walkerSelect.value = '';
+                walkerSelect.classList.remove('walker-required');
+                validateSaveButton();
+            });
+
+            // Navegación entre vistas
+            manageWalkersBtn.addEventListener('click', () => {
+                mainView.classList.add('hidden');
+                walkersView.classList.remove('hidden');
+            });
+
+            backToMainBtn.addEventListener('click', () => {
+                walkersView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+            });
+
+            // Manejar paseadores
+            function renderWalkers() {
+                walkerList.innerHTML = '';
+                paseadores.forEach((walker, index) => {
+                    const walkerItem = document.createElement('div');
+                    walkerItem.className = 'walker-item';
+                    walkerItem.innerHTML = `
+                        <span class="walker-name">${walker}</span>
+                        <div class="walker-actions">
+                            <button class="edit-btn" data-index="${index}" title="Editar">✏️</button>
+                            <button class="delete-btn" data-index="${index}" title="Eliminar">🗑️</button>
+                        </div>
+                    `;
+                    walkerList.appendChild(walkerItem);
+                });
+                
+                updateWalkerSelect();
+                attachWalkerEventListeners();
+            }
+
+            function updateWalkerSelect() {
+                walkerSelect.innerHTML = '<option value="">Selecciona paseador...</option>';
+                paseadores.forEach(paseador => {
+                    const option = document.createElement('option');
+                    option.value = paseador;
+                    option.textContent = paseador;
+                    walkerSelect.appendChild(option);
+                });
+            }
+
+            function attachWalkerEventListeners() {
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        const newName = prompt('Editar nombre:', paseadores[index]);
+                        if (newName !== null && newName.trim() !== '') {
+                            paseadores[index] = newName.trim();
+                            saveWalkers();
+                            renderWalkers();
+                            showNotification('✅ Paseador editado correctamente!');
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        const walkerName = paseadores[index];
+                        if (confirmAction(`¿Eliminar a "${walkerName}"?`)) {
+                            paseadores.splice(index, 1);
+                            saveWalkers();
+                            renderWalkers();
+                            showNotification('🗑️ Paseador eliminado correctamente!');
+                        }
+                    });
+                });
+            }
+
+            function confirmAction(message) {
+                const result = window.confirm(message);
+                if (result) {
+                    showNotification('✅ Acción confirmada!');
+                } else {
+                    showNotification('❌ Acción cancelada', true);
+                }
+                return result;
+            }
+
+            addWalkerBtn.addEventListener('click', () => {
+                const name = newWalkerInput.value.trim();
+                if (name && !paseadores.includes(name)) {
+                    paseadores.push(name);
+                    saveWalkers();
+                    renderWalkers();
+                    newWalkerInput.value = '';
+                    showNotification('✅ Paseador agregado correctamente!');
+                } else if (name && paseadores.includes(name)) {
+                    showNotification('⚠️ Este paseador ya existe', true);
+                } else {
+                    showNotification('⚠️ Por favor ingresa un nombre', true);
+                }
+            });
+
+            newWalkerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addWalkerBtn.click();
+                }
+            });
+
+            function saveWalkers() {
+                localStorage.setItem('paseadores', JSON.stringify(paseadores));
+            }
+
+            function saveAndRefresh() {
+                localStorage.setItem('registros', JSON.stringify(registros));
+                renderTodayHistory();
+                renderFullHistory();
+            }
+
+            function renderTodayHistory() {
+                const fecha = new Date().toISOString().split('T')[0];
+                todayHistoryEl.innerHTML = '';
+                
+                if (registros[fecha] && registros[fecha][currentDog]) {
+                    const sortedRecords = registros[fecha][currentDog].sort((a, b) => a.hora.localeCompare(b.hora));
+                    
+                    // Agrupar por hora si tienen la misma
+                    const groupedRecords = [];
+                    let currentGroup = null;
+                    
+                    sortedRecords.forEach(record => {
+                        if (!currentGroup || currentGroup.hora !== record.hora) {
+                            if (currentGroup) groupedRecords.push(currentGroup);
+                            currentGroup = {
+                                hora: record.hora,
+                                actions: [record],
+                                paseador: record.tipo === 'paseo' ? record.paseador : ''
+                            };
+                        } else {
+                            currentGroup.actions.push(record);
+                            if (record.tipo === 'paseo' && record.paseador) {
+                                currentGroup.paseador = record.paseador;
+                            }
+                        }
+                    });
+                    if (currentGroup) groupedRecords.push(currentGroup);
+                    
+                    groupedRecords.forEach(group => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'history-item';
+                        
+                        const actionsHtml = group.actions.map(action => 
+                            `<span class="history-action">${getEmojiForType(action.tipo)} ${action.tipo}</span>`
+                        ).join('');
+                        
+                        itemEl.innerHTML = `
+                            <div class="record-content">
+                                <div>
+                                    <div><strong>${group.hora}</strong></div>
+                                    <div class="history-actions">${actionsHtml}</div>
+                                    ${group.paseador ? `<div class="walker-info">👤 ${group.paseador}</div>` : ''}
+                                </div>
+                                <div class="edit-delete-controls">
+                                    <button class="edit-history-btn" data-date="${fecha}" data-dog="${currentDog}" data-group-hora="${group.hora}">✏️</button>
+                                    <button class="delete-history-btn" data-date="${fecha}" data-dog="${currentDog}" data-group-hora="${group.hora}">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                        todayHistoryEl.appendChild(itemEl);
+                    });
+                } else {
+                    todayHistoryEl.innerHTML = '<div class="no-records">No hay registros hoy 📅</div>';
+                }
+                
+                attachHistoryEventListeners();
+            }
+
+            function renderFullHistory() {
+                fullHistoryEl.innerHTML = '';
+                const fechas = Object.keys(registros).sort().reverse();
+                
+                if (fechas.length === 0) {
+                    fullHistoryEl.innerHTML = '<div class="no-records">No hay historial registrado 📋</div>';
+                    return;
+                }
+                
+                fechas.forEach(fecha => {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.innerHTML = `<div class="history-date">📅 ${formatDate(fecha)}</div>`;
+                    
+                    // Obtener todos los registros de esta fecha para el perro actual
+                    const allRecords = [];
+                    if (registros[fecha] && registros[fecha][currentDog]) {
+                        allRecords.push(...registros[fecha][currentDog]);
+                    }
+                    
+                    if (allRecords.length > 0) {
+                        const sortedRecords = allRecords.sort((a, b) => a.hora.localeCompare(b.hora));
+                        
+                        // Agrupar por hora
+                        const groupedRecords = [];
+                        let currentGroup = null;
+                        
+                        sortedRecords.forEach(record => {
+                            if (!currentGroup || currentGroup.hora !== record.hora) {
+                                if (currentGroup) groupedRecords.push(currentGroup);
+                                currentGroup = {
+                                    hora: record.hora,
+                                    actions: [record],
+                                    paseador: record.tipo === 'paseo' ? record.paseador : ''
+                                };
+                            } else {
+                                currentGroup.actions.push(record);
+                                if (record.tipo === 'paseo' && record.paseador) {
+                                    currentGroup.paseador = record.paseador;
+                                }
+                            }
+                        });
+                        if (currentGroup) groupedRecords.push(currentGroup);
+                        
+                        const actionsDiv = document.createElement('div');
+                        actionsDiv.className = 'history-actions';
+                        
+                        groupedRecords.forEach(group => {
+                            const actionDiv = document.createElement('div');
+                            actionDiv.className = 'history-item';
+                            actionDiv.style.marginBottom = '12px';
+                            
+                            const actionsHtml = group.actions.map(action => 
+                                `<span class="history-action">${getEmojiForType(action.tipo)} ${action.tipo}</span>`
+                            ).join('');
+                            
+                            actionDiv.innerHTML = `
+                                <div class="record-content">
+                                    <div>
+                                        <div><strong>${group.hora}</strong></div>
+                                        <div class="history-actions">${actionsHtml}</div>
+                                        ${group.paseador ? `<div class="walker-info">👤 ${group.paseador}</div>` : ''}
+                                    </div>
+                                    <div class="edit-delete-controls">
+                                        <button class="edit-history-btn" data-date="${fecha}" data-dog="${currentDog}" data-group-hora="${group.hora}">✏️</button>
+                                        <button class="delete-history-btn" data-date="${fecha}" data-dog="${currentDog}" data-group-hora="${group.hora}">🗑️</button>
+                                    </div>
+                                </div>
+                            `;
+                            actionsDiv.appendChild(actionDiv);
+                        });
+                        
+                        dayDiv.appendChild(actionsDiv);
+                    } else {
+                        const noRecordsDiv = document.createElement('div');
+                        noRecordsDiv.className = 'no-records';
+                        noRecordsDiv.textContent = `No hay registros para ${currentDog}`;
+                        dayDiv.appendChild(noRecordsDiv);
+                    }
+                    
+                    fullHistoryEl.appendChild(dayDiv);
+                });
+                
+                attachHistoryEventListeners();
+            }
+
+            function attachHistoryEventListeners() {
+                document.querySelectorAll('.edit-history-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const date = e.target.getAttribute('data-date');
+                        const dog = e.target.getAttribute('data-dog');
+                        const groupHora = e.target.getAttribute('data-group-hora');
+                        
+                        // Encontrar el grupo de registros para esta hora
+                        const recordsAtHour = registros[date][dog].filter(r => r.hora === groupHora);
+                        
+                        if (recordsAtHour.length === 1) {
+                            // Si solo hay uno, editar directamente
+                            const record = recordsAtHour[0];
+                            const newTipo = prompt(`Editar tipo:\nActual: ${record.tipo}\nNuevo (paseo/popis/pichi):`, record.tipo);
+                            if (newTipo !== null) {
+                                const newPaseador = record.tipo === 'paseo' ? 
+                                    prompt('Editar paseador:', record.paseador) : record.paseador;
+                                
+                                record.tipo = newTipo.toLowerCase();
+                                if (record.tipo === 'paseo') record.paseador = newPaseador || '';
+                                
+                                saveAndRefresh();
+                                showNotification('✅ Registro editado correctamente!');
+                            } else {
+                                showNotification('❌ Edición cancelada', true);
+                            }
+                        } else {
+                            // Si hay múltiples, permitir editar cada uno
+                            showNotification(`Hay ${recordsAtHour.length} registros a las ${groupHora}. Edita cada uno individualmente.`);
+                            recordsAtHour.forEach((record, idx) => {
+                                const newTipo = prompt(`Registro ${idx + 1} (${record.tipo}):\nNuevo tipo (paseo/popis/pichi):`, record.tipo);
+                                if (newTipo !== null) {
+                                    const newPaseador = record.tipo === 'paseo' ? 
+                                        prompt('Editar paseador:', record.paseador) : record.paseador;
+                                    
+                                    record.tipo = newTipo.toLowerCase();
+                                    if (record.tipo === 'paseo') record.paseador = newPaseador || '';
+                                } else {
+                                    showNotification('❌ Edición cancelada', true);
+                                }
+                            });
+                            saveAndRefresh();
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.delete-history-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const date = e.target.getAttribute('data-date');
+                        const dog = e.target.getAttribute('data-dog');
+                        const groupHora = e.target.getAttribute('data-group-hora');
+                        
+                        if (confirmAction(`¿Eliminar todos los registros de ${groupHora}?`)) {
+                            registros[date][dog] = registros[date][dog].filter(r => r.hora !== groupHora);
+                            if (registros[date][dog].length === 0) {
+                                delete registros[date][dog];
+                            }
+                            if (Object.keys(registros[date]).length === 0) {
+                                delete registros[date];
+                            }
+                            saveAndRefresh();
+                            showNotification('🗑️ Registros eliminados correctamente!');
+                        }
+                    });
+                });
+            }
+
+            function getEmojiForType(tipo) {
+                switch(tipo) {
+                    case 'paseo': return '🚶‍♂️';
+                    case 'popis': return '💩'; // popis es caca
+                    case 'pichi': return '💧'; // pichi es pis
+                    default: return '';
+                }
+            }
+
+            function formatDate(dateString) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('es-ES', options);
+            }
+
+            showHistoryBtn.addEventListener('click', () => {
+                fullHistoryEl.classList.toggle('hidden');
+                showHistoryBtn.textContent = fullHistoryEl.classList.contains('hidden') ? '📋 Ver historial completo' : '❌ Ocultar historial';
+            });
+
+            // Inicializar
+            updateActiveDog();
+            renderWalkers();
+            renderTodayHistory();
+        });
+    </script>
+</body>
+</html>
